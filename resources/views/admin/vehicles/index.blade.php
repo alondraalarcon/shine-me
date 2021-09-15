@@ -5,7 +5,7 @@
 <div class="container-fluid p-0">
     <div class="row mb-2 mb-xl-3">
         <div class="col-auto d-none d-sm-block">
-            <h3><strong>Vehicles</strong></h3>
+            <h3><strong>List of Vehicles</strong></h3>
         </div>
         <div class="col-auto ms-auto text-end mt-n1">
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="align-middle me-2" data-feather="plus"></i> New Vehicle</button>
