@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CarwashProviderController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -24,10 +26,22 @@ Auth::routes();
 
 Route::group(['middleware' => 'App\Http\Middleware\Admin'], function () {
     Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index']);
+<<<<<<< HEAD
 
     Route::get('/riders', function () {
         return view('admin.riderlist');
     });
+=======
+    Route::get('/riders', [App\Http\Controllers\CarwashProviderController::class, 'carwashproviderlist']);
+    Route::get('/customers', function () { return view('admin.customers'); });
+
+     //VEHICLES 
+     Route::get('/vehicles', [App\Http\Controllers\VehicleController::class, 'index']);
+     Route::post('/vehicles/store', [App\Http\Controllers\VehicleController::class, 'store'])->name('store.vehicle');
+     Route::get('/vehicles/show/{id}', [App\Http\Controllers\VehicleController::class, 'show']);
+     Route::post('/vehicles/update/{id}', [App\Http\Controllers\VehicleController::class, 'update']);
+     Route::post('/vehicles/destroy/{id}', [App\Http\Controllers\VehicleController::class, 'destroy']);
+>>>>>>> e15b642297ec773320f298b978c585584093e1e5
 
 
     //VEHICLES 
@@ -50,4 +64,4 @@ Route::group(['middleware' => 'App\Http\Middleware\Customer'], function () {
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 //Customer Registration
 Route::get('/registers', [App\Http\Controllers\RegistrationController::class, 'registers']);
-Route::POST('/registercustomer', [App\Http\Controllers\RegistrationController::class, 'registercustomer'])->name('customer_register');
+Route::POST('/registercustomer', [App\Http\Controllers\RegistrationController::class, 'registercustomer'])->name('rider_register');
