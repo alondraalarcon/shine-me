@@ -21,13 +21,25 @@ Route::get('/', function () {
 
 Auth::routes();
 
+
+Route::group(['middleware' => 'App\Http\Middleware\Admin'], function () {
+    Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index']);
+    Route::get('/riderlist', function () {
+        return view('admin.riderlist');
+    });
+
+});
+
+Route::group(['middleware' => 'App\Http\Middleware\CarwashProvider'], function () {
+
+});
+
+Route::group(['middleware' => 'App\Http\Middleware\Customer'], function () {
+
+});
+
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-//Rider Registration
-Route::get('/registration', [App\Http\Controllers\RegistrationController::class, 'registration']);
-Route::POST('/registerrider', [App\Http\Controllers\RegistrationController::class, 'riderregister'])->name('rider_register');
 //Customer Registration
 Route::get('/registers', [App\Http\Controllers\RegistrationController::class, 'registers']);
 Route::POST('/registercustomer', [App\Http\Controllers\RegistrationController::class, 'registercustomer'])->name('customer_register');
-
-// ADMIN VIEWS
-Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index']);

@@ -19,6 +19,7 @@
     <link href="/asset/css/app.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.1.1/css/all.css">
+
 </head>
 
 <body>
@@ -34,43 +35,63 @@
 						Pages
 					</li>
 
-					<li class="sidebar-item active">
-                        <a class="sidebar-link" href="index.html">
+					<li class="sidebar-item {{ Request::is('admin') ? 'active':''}}">
+                        <a class="sidebar-link" href="/admin">
                             <i class="fas fa-home"></i>
                             <span class="align-middle">Dashboard</span>
                         </a>
 					</li>
 
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="pages-profile.html">
+					<li class="sidebar-item {{ Request::is('riderlist') ? 'active':''}}">
+						<a class="sidebar-link" href="/riderlist">
                             <i class="fas fa-motorcycle"></i>                            
-                            <span class="align-middle">Rider List</span>
+                            <span class="align-middle">Carwash Provider List</span>
                         </a>
 					</li>
 
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="pages-sign-in.html">
+					<li class="sidebar-item {{ Request::is('customerlist') ? 'active':''}}">
+						<a class="sidebar-link" href="/customerlist">
                             <i class="fas fa-users"></i>
                             <span class="align-middle">Customer List</span>
                         </a>
 					</li>
 
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="pages-sign-up.html">
+					<li class="sidebar-item {{ Request::is('carlist') ? 'active':''}}">
+						<a class="sidebar-link" href="/carlist">
                             <i class="fas fa-car"></i>
                             <span class="align-middle">Cars</span>
                         </a>
 					</li>
 
+					<li class="sidebar-item {{ Request::is('services') ? 'active':''}}">
+						<a class="sidebar-link" href="/services">
+							<i class="fas fa-briefcase"></i>
+                            <span class="align-middle">Services</span>
+                        </a>
+					</li>
 
-                    <a data-bs-target="#dashboards" data-bs-toggle="collapse" class="sidebar-link" aria-expanded="true">
+					<li class="sidebar-item {{ Request::is('booking') ? 'active':''}}">
+						<a class="sidebar-link" href="/booking">
+							<i class="fas fa-map"></i>
+                            <span class="align-middle">Monitor Booking</span>
+                        </a>
+					</li>
+
+					<li class="sidebar-item {{ Request::is('sales') ? 'active':''}}">
+						<a class="sidebar-link" href="/sales">
+							<i class="fas fa-money-bill-wave-alt"></i>
+                            <span class="align-middle">Monitor Sales</span>
+                        </a>
+					</li>
+
+                    <a data-bs-target="#settings" data-bs-toggle="collapse" class="sidebar-link" aria-expanded="true">
                         <i class="fas fa-cog"></i>
                         <span class="align-middle">Settings</span>
                     </a>
 
-                    <ul id="dashboards" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar" style="">
-                        <li class="sidebar-item"><a class="sidebar-link" href="dashboard-ecommerce.html"> </a></li>
-                        <li class="sidebar-item"><a class="sidebar-link" href="dashboard-crypto.html"> </a></li>
+                    <ul id="settings" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar" style="">
+                        <li class="sidebar-item"><a class="sidebar-link" href="/"> Set Commissions </a></li>
+                        <li class="sidebar-item"><a class="sidebar-link" href="/"> </a></li>
                     </ul>
 				</ul>
 			</div>

@@ -6,28 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
+use Illuminate\Support\Facades\Session;
 
 class RegistrationController extends Controller
 {
-    // RIDER REGISTRATION
-    public function registration()
-    {
-        return view('rider.registration');
-    }
-
-    public function riderregister(Request $req)
-    {
-        return User::create([
-            'name' => $req['name'], 
-            'email' => $req['email'],
-            'phone' =>  '+63'."".$req['phone'],
-            'password' => Hash::make($req['password']),
-            'account_type' =>'2',
-        ]);
-    }
-    //END OF RIDER REGISTRATION
-
-
+  
     // CUSTOMER REGISTRATION
     public function registers()
     {
@@ -36,13 +19,21 @@ class RegistrationController extends Controller
 
     public function registercustomer(Request $req)
     {
-        return User::create([
-            'name' => $req['name'], 
-            'email' => $req['email'],
-            'phone' =>  '+63'."".$req['phone'],
-            'password' => Hash::make($req['password']),
-            'account_type' =>'3',
-        ]);
+        $newcustomer = new User;
+
+        $newcustomer->name = $req->name;
+        $newcustomer->email = $req->email;
+        $newcustomer->phone ='+63'.$req->phone;
+        $newcustomer->password = Hash::make($req->password);
+        $newcustomer->account_type = '3';
+
+        $insert = $newcustomer->save();
+
+        if($insert){
+            Session::flash('message', 'New Customer Added!'); 
+            Session::flash('alert-class', 'alert-danger'); 
+        }
+
     }
     //END OF CUSTOMER REGISTRATION
 
