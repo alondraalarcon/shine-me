@@ -29,13 +29,6 @@ Route::group(['middleware' => 'App\Http\Middleware\Admin'], function () {
     Route::get('/riders', [App\Http\Controllers\CarwashProviderController::class, 'carwashproviderlist']);
     Route::get('/customers', function () { return view('admin.customers'); });
 
-     //VEHICLES 
-     Route::get('/vehicles', [App\Http\Controllers\VehicleController::class, 'index']);
-     Route::post('/vehicles/store', [App\Http\Controllers\VehicleController::class, 'store'])->name('store.vehicle');
-     Route::get('/vehicles/show/{id}', [App\Http\Controllers\VehicleController::class, 'show']);
-     Route::post('/vehicles/update/{id}', [App\Http\Controllers\VehicleController::class, 'update']);
-     Route::post('/vehicles/destroy/{id}', [App\Http\Controllers\VehicleController::class, 'destroy']);
-
 
     //VEHICLES 
     Route::get('/vehicles', [App\Http\Controllers\VehicleController::class, 'index']);
