@@ -14,8 +14,4 @@ class Vehicle extends Model
         'status'
     ];
 
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> e15b642297ec773320f298b978c585584093e1e5

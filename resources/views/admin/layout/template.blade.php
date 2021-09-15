@@ -129,11 +129,7 @@
 			</nav>
 
             <main class="content">
-<<<<<<< HEAD
                 @include('layouts.notifications')
-=======
-				@include('layouts.notifications')
->>>>>>> e15b642297ec773320f298b978c585584093e1e5
                 @yield('content')
             </main>
     </div>

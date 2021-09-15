@@ -46,11 +46,8 @@ class VehicleController extends Controller
        $vehicle->Type = $request->type;
        $vehicle->price = $request->price;
        $vehicle->status = $request->status;
-<<<<<<< HEAD
      
-=======
 
->>>>>>> e15b642297ec773320f298b978c585584093e1e5
        if($vehicle->save()) {
             return redirect()->back()->with('success', 'New vehicle added successfully!');
        }
@@ -98,11 +95,8 @@ class VehicleController extends Controller
        $vehicle->Type = $request->type;
        $vehicle->price = $request->price;
        $vehicle->status = $request->status;
-<<<<<<< HEAD
      
-=======
 
->>>>>>> e15b642297ec773320f298b978c585584093e1e5
        if($vehicle->save()) {
             return redirect()->back()->with('success', 'Vehicle updated successfully!');
        }
@@ -121,8 +115,4 @@ class VehicleController extends Controller
             return redirect()->back()->with('success', 'Vehicle deleted successfully!');
        }
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> e15b642297ec773320f298b978c585584093e1e5
