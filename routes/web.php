@@ -24,10 +24,18 @@ Auth::routes();
 
 Route::group(['middleware' => 'App\Http\Middleware\Admin'], function () {
     Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index']);
-    Route::get('/riderlist', function () {
+
+    Route::get('/riders', function () {
         return view('admin.riderlist');
     });
 
+
+    //VEHICLES 
+    Route::get('/vehicles', [App\Http\Controllers\VehicleController::class, 'index']);
+    Route::post('/vehicles/store', [App\Http\Controllers\VehicleController::class, 'store'])->name('store.vehicle');
+    Route::get('/vehicles/show/{id}', [App\Http\Controllers\VehicleController::class, 'show']);
+    Route::post('/vehicles/update/{id}', [App\Http\Controllers\VehicleController::class, 'update']);
+    Route::post('/vehicles/destroy/{id}', [App\Http\Controllers\VehicleController::class, 'destroy']);
 });
 
 Route::group(['middleware' => 'App\Http\Middleware\CarwashProvider'], function () {

@@ -4,14 +4,14 @@
 @section('content')
     <div class="tab">
         <ul class="nav nav-tabs" role="tablist">
-            <li class="nav-item"><a class="nav-link" href="#Request" data-bs-toggle="tab" 
-            role="tab" aria-selected="false">Request</a></li>
-            <li class="nav-item"><a class="nav-link active" href="#Approved" data-bs-toggle="tab" 
-            role="tab" aria-selected="true">Approved</a></li>
+            <li class="nav-item"><a class="nav-link active" href="#Request" data-bs-toggle="tab" 
+            role="tab" aria-selected="false">Approved Carwash Provider</a></li>
+            <li class="nav-item"><a class="nav-link" href="#Approved" data-bs-toggle="tab" 
+            role="tab" aria-selected="true">For Approval</a></li>
         </ul>
 
-        <div class="tab-content active">
-            <div class="tab-pane" id="Request" role="tabpanel">
+        <div class="tab-content">
+            <div class="tab-pane active" id="Request" role="tabpanel">
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
