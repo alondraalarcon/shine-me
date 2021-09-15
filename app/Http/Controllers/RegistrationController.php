@@ -11,10 +11,10 @@ use Illuminate\Support\Facades\Session;
 class RegistrationController extends Controller
 {
   
-    // CUSTOMER REGISTRATION
+    // CARWASH PROVIDER REGISTRATION
     public function registers()
     {
-        return view('customer.registers');
+        return view('rider.registration');
     }
 
     public function registercustomer(Request $req)
@@ -25,16 +25,17 @@ class RegistrationController extends Controller
         $newcustomer->email = $req->email;
         $newcustomer->phone ='+63'.$req->phone;
         $newcustomer->password = Hash::make($req->password);
-        $newcustomer->account_type = '3';
+        $newcustomer->account_type = '2';
+        $newcustomer->address = $req->address;
 
         $insert = $newcustomer->save();
 
         if($insert){
-            Session::flash('message', 'New Customer Added!'); 
+            Session::flash('message', 'New Carwash Provider Added!'); 
             Session::flash('alert-class', 'alert-danger'); 
         }
 
     }
-    //END OF CUSTOMER REGISTRATION
+    //END OF CARWASH PROVIDER REGISTRATION
 
 }

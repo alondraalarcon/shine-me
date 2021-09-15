@@ -48,6 +48,7 @@
                                                 </span>
                                             @enderror
 										</div>
+										
 										<div class="row">
                             				<div class="col-md-6 col-6">
 
@@ -77,20 +78,36 @@
 										</div>
 
 										<div class="mb-3">
-											<label class="form-label">Password</label>
-											<input class="form-control form-control-lg" type="password" name="password" placeholder="Enter password" required/>
-                                            @error('password')
+											<label class="form-label">Address</label>
+											<input class="form-control form-control-lg" type="text" name="address" placeholder="Enter your address" required/>
+                                            @error('address')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
 										</div>
 
-                                        <div class="mb-3">
-                                            <label class="form-label">Confirm Password</label>
-                                            <input id="password-confirm" type="password" class="form-control"  placeholder="Enter confirm password"
-                                            name="password_confirmation" required autocomplete="new-password">
-                                        </div>
+										<div class="row">
+                            				<div class="col-md-6 col-6">
+												<div class="mb-3">
+													<label class="form-label">Password</label>
+													<input class="form-control form-control-lg" type="password" name="password" placeholder="Enter password" required/>
+													@error('password')
+														<span class="invalid-feedback" role="alert">
+															<strong>{{ $message }}</strong>
+														</span>
+													@enderror
+												</div>
+											</div>
+
+											<div class="col-md-6 col-6">
+												<div class="mb-3">
+													<label class="form-label">Confirm Password</label>
+													<input id="password-confirm" type="password" class="form-control"  placeholder="Enter confirm password"
+													name="password_confirmation" required autocomplete="new-password">
+												</div>
+											</div>
+										</div>
 
 										<div class="text-center mt-3">
 											<button type="submit" class="btn btn-lg btn-primary">Sign up</button>
