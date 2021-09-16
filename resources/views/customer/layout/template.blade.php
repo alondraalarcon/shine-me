@@ -36,64 +36,13 @@
 						Menu
 					</li>
 
-					<li class="sidebar-item {{ Request::is('admin') ? 'active':''}}">
-                        <a class="sidebar-link" href="/admin">
+					<li class="sidebar-item {{ Request::is('customer') ? 'active':''}}">
+                        <a class="sidebar-link" href="/customer">
                             <i class="fas fa-home"></i>
                             <span class="align-middle">Dashboard</span>
                         </a>
 					</li>
 
-					<li class="sidebar-item {{ Request::is('riders') ? 'active':''}}">
-						<a class="sidebar-link" href="/riders">
-                            <i class="fas fa-motorcycle"></i>                            
-                            <span class="align-middle">Carwash Provider List</span>
-                        </a>
-					</li>
-
-					<li class="sidebar-item {{ Request::is('customers') ? 'active':''}}">
-						<a class="sidebar-link" href="/customers">
-                            <i class="fas fa-users"></i>
-                            <span class="align-middle">Customer List</span>
-                        </a>
-					</li>
-
-					<li class="sidebar-item {{ Request::is('vehicles') ? 'active':''}}">
-						<a class="sidebar-link" href="/vehicles">
-                            <i class="fas fa-car"></i>
-                            <span class="align-middle">Vehicles</span>
-                        </a>
-					</li>
-
-					<li class="sidebar-item {{ Request::is('services') ? 'active':''}}">
-						<a class="sidebar-link" href="/services">
-							<i class="fas fa-briefcase"></i>
-                            <span class="align-middle">Services</span>
-                        </a>
-					</li>
-
-					<li class="sidebar-item {{ Request::is('booking') ? 'active':''}}">
-						<a class="sidebar-link" href="/booking">
-							<i class="fas fa-map"></i>
-                            <span class="align-middle">Monitor Booking</span>
-                        </a>
-					</li>
-
-					<li class="sidebar-item {{ Request::is('sales') ? 'active':''}}">
-						<a class="sidebar-link" href="/sales">
-							<i class="fas fa-money-bill-wave-alt"></i>
-                            <span class="align-middle">Monitor Sales</span>
-                        </a>
-					</li>
-
-                    <a data-bs-target="#settings" data-bs-toggle="collapse" class="sidebar-link" aria-expanded="true">
-                        <i class="fas fa-cog"></i>
-                        <span class="align-middle">Settings</span>
-                    </a>
-
-                    <ul id="settings" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar" style="">
-                        <li class="sidebar-item"><a class="sidebar-link" href="/"> Set Commissions </a></li>
-                        <li class="sidebar-item"><a class="sidebar-link" href="/"> </a></li>
-                    </ul>
 				</ul>
 			</div>
 		</nav>

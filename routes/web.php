@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CarwashProviderController;
-
+use App\Http\Controllers\CustomerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,9 +25,14 @@ Auth::routes();
 
 
 Route::group(['middleware' => 'App\Http\Middleware\Admin'], function () {
-    Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index']);
+    Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->name('admin');
+    Route::get('/customers', function () { return view('admin.customers.customers'); });
+
+    //CARWASH PROVIDER
     Route::get('/riders', [App\Http\Controllers\CarwashProviderController::class, 'carwashproviderlist']);
-    Route::get('/customers', function () { return view('admin.customers'); });
+    Route::get('/carwash/show/{id}', [App\Http\Controllers\CarwashProviderController::class, 'show']);
+    Route::post('/carwash/approved/{id}', [App\Http\Controllers\CarwashProviderController::class, 'approved']);
+    Route::post('/carwash/update/{id}', [App\Http\Controllers\CarwashProviderController::class, 'update']);
 
 
     //VEHICLES 
@@ -39,10 +44,13 @@ Route::group(['middleware' => 'App\Http\Middleware\Admin'], function () {
 });
 
 Route::group(['middleware' => 'App\Http\Middleware\CarwashProvider'], function () {
+    Route::get('/carwashprovider', [App\Http\Controllers\CarwashProviderController::class, 'index'])->name('carwashprovider');
+    Route::get('/wallet', function () { return view('rider.wallet.wallet'); });
 
 });
 
 Route::group(['middleware' => 'App\Http\Middleware\Customer'], function () {
+    Route::get('/customer', [App\Http\Controllers\CustomerController::class, 'index'])->name('customer');
 
 });
 
