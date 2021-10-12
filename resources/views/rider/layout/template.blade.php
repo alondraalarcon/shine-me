@@ -13,6 +13,7 @@
     <link rel="shortcut icon" href="img/icons/icon-48x48.png" />
 
     <link rel="canonical" href="https://demo-basic.adminkit.io/" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Shine Me</title>
 
@@ -47,6 +48,13 @@
 						<a class="sidebar-link" href="/wallet">
                             <i class="fas fa-wallet"></i>                            
                             <span class="align-middle">Wallet</span>
+                        </a>
+					</li>
+
+                    <li class="sidebar-item {{ Request::is('bookings') ? 'active':''}}">
+						<a class="sidebar-link" href="/bookings">
+                            <i class="fas fa-history"></i>                            
+                            <span class="align-middle">Booking History</span>
                         </a>
 					</li>
 

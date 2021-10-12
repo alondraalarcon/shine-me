@@ -14,14 +14,14 @@
 
 	<link rel="canonical" href="https://demo-basic.adminkit.io/pages-sign-up.html" />
 
-	<title>Shine Me | Sign Up </title>
+	<title>Shine Me | Application </title>
 
 	<link href="/asset/css/app.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
-	<main class="d-flex w-100">
+	<main class="d-flex w-150">
 		<div class="container d-flex flex-column">
 			<div class="row vh-100">
 				<div class="col-sm-10 col-md-8 col-lg-6 mx-auto d-table h-100">
@@ -29,14 +29,11 @@
 						<div class="card">
 							<div class="card-body">
 								<div class="m-sm-3">
+								@include('layouts.notifications')
 									<div class="text-center">
 										<img src="/asset/img/shineme.png" class="img-fluid rounded-circle" width="132" height="132" />
 									</div>
-                                    <div class="text-center mt-2">
-                                        <p style="font: size 25px;" class="fw-bold">
-                                            Create your account
-                                        </p>
-                                    </div>
+                              
                                     <form method="POST" action="{{ route('rider_register') }}">
                                     @csrf
 										<div class="mb-3">
@@ -49,7 +46,7 @@
                                             @enderror
 										</div>
 										<div class="row">
-                            				<div class="col-md-6 col-6">
+                            				<div class="col-md-6 col-12">
 
 											<label class="form-label">Phone</label>
 												<div class=" input-group mb-3">
@@ -63,7 +60,7 @@
 												</div>
 											</div>
 
-											<div class="col-md-6 col-6">			
+											<div class="col-md-6 col-12">			
 												<div class="mb-3">
 													<label class="form-label">Email</label>
 													<input class="form-control form-control-lg" type="email" name="email" placeholder="Enter your email" required />
@@ -76,10 +73,50 @@
 											</div>
 										</div>
 
+										<div class="row">
+                            				<div class="col-md-6 col-12">
+												<div class="mb-3">
+													<label for="title">Region:</label>
+													<select name="region" class="form-control" >
+														<option value="">--- Select Region ---</option>
+														@foreach ($region as $regions)
+															<option value="{{ $regions->regCode }}">{{ $regions->regDesc }}</option>
+														@endforeach
+													</select>
+												</div>
+											</div>
+									
+                            				<div class="col-md-6 col-12">
+												<div class="mb-3">
+													<label for="title">Province:</label>
+													<select name="province" class="form-control">
+													</select>
+												</div>
+											</div>
+										</div>
+
+										<div class="row">
+                            				<div class="col-md-6 col-12">
+												<div class="mb-3">
+													<label for="title">Municipal:</label>
+													<select name="municipal" class="form-control" >
+													</select>
+												</div>
+											</div>
+										
+                            				<div class="col-md-6 col-12">
+												<div class="mb-3">
+													<label for="title">Barangay:</label>
+														<select name="brgy" class="form-control" >
+													</select>
+												</div>
+											</div>
+										</div>
+
 										<div class="mb-3">
-											<label class="form-label">Address</label>
-											<input class="form-control form-control-lg" type="text" name="address" placeholder="Enter your address" required/>
-                                            @error('address')
+											<label class="form-label">Street Address</label>
+											<input class="form-control form-control-lg" type="text" name="street" placeholder="Enter your village and street" required/>
+                                            @error('street')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
@@ -87,7 +124,7 @@
 										</div>
 
 										<div class="row">
-                            				<div class="col-md-6 col-6">
+                            				<div class="col-md-6 col-12">
 												<div class="mb-3">
 													<label class="form-label">Password</label>
 													<input class="form-control form-control-lg" type="password" name="password" placeholder="Enter password" required/>
@@ -99,7 +136,7 @@
 												</div>
 											</div>
 
-											<div class="col-md-6 col-6">
+											<div class="col-md-6 col-12">
 												<div class="mb-3">
 													<label class="form-label">Confirm Password</label>
 													<input id="password-confirm" type="password" class="form-control"  placeholder="Enter confirm password"
@@ -109,7 +146,7 @@
 										</div>
 
 										<div class="text-center mt-3">
-											<button type="submit" class="btn btn-lg btn-primary">Sign up</button>
+											<button type="submit" class="btn btn-lg btn-primary">Apply</button>
 										</div>
 									</form>
 								</div>
@@ -123,6 +160,75 @@
 	</main>
 
 	<script src="js/app.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			//REGION ON CHANGE
+			$('select[name="region"]').on('change', function() {
+				$('select[name="province"]').empty();
+				var regCode = $(this).val();
+				if(regCode) {
+					$.ajax({
+						url: '/regionChange/'+regCode,
+						type: "GET",
+						dataType: "json",
+						success:function(data) {
+							$('select[name="province"]').append('<option value="">--- Select Province ---</option>');
+							$.each(data, function(key, value) {
+								$('select[name="province"]').append('<option value="'+ value.provCode +'">'+ value.provDesc +'</option>');
+							});
+						}
+					});
+				}else{
+					$('select[name="province"]').empty();
+				}
+			});
+
+			//PROVINCE ON CHANGE
+			$('select[name="province"]').on('change', function() {
+				$('select[name="municipal"]').empty();
+				var provinceCode = $(this).val();
+				if(provinceCode) {
+					$.ajax({
+						url: '/provinceChange/'+provinceCode,
+						type: "GET",
+						dataType: "json",
+						success:function(data) {
+							$('select[name="municipal"]').append('<option value="">- Select Municipality -</option>');
+							$.each(data, function(key, value) {
+								$('select[name="municipal"]').append('<option value="'+ value.citymunCode +'">'+ value.citymunDesc +'</option>');
+							});
+						}
+					});
+				}else{
+					$('select[name="municipal"]').empty();
+				}
+			});
+
+			//MUNICIPALITY ON CHANGE
+			$('select[name="municipal"]').on('change', function() {
+				$('select[name="brgy"]').empty();
+				var municipalityCode = $(this).val();
+				if(municipalityCode) {
+					$.ajax({
+						url: '/municipalityChange/'+municipalityCode,
+						type: "GET",
+						dataType: "json",
+						success:function(data) {
+							$('select[name="brgy"]').append('<option value="">- Select Barangay -</option>');
+							$.each(data, function(key, value) {
+								$('select[name="brgy"]').append('<option value="'+ value.brgyCode +'">'+ value.brgyDesc +'</option>');
+							});
+						}
+					});
+				}else{
+					$('select[name="brgy"]').empty();
+				}
+			});
+		});
+	</script>
 
 </body>
 

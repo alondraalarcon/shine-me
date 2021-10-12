@@ -41,21 +41,24 @@
                                     @csrf
 										<div class="mb-3">
 											<label class="form-label">Name</label>
-											<input class="form-control form-control-lg" type="text" name="name" placeholder="Enter your name" required/>
+											<input class="form-control form-control-lg" type="text" value="{{ old('name') }}"
+											 name="name" placeholder="Enter your name" required/>
                                             @error('name')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
 										</div>
-										
+
 										<div class="row">
                             				<div class="col-md-6 col-6">
 
-											<label class="form-label">Phone</label>
+											<label class="form-label">Phone Number</label>
 												<div class=" input-group mb-3">
 													<span class="input-group-text" id="addon1">+63</span>
-													<input class="form-control form-control-lg" type="text" name="phone" placeholder="Enter phone number" aria-describedby="addon1" required/>
+													<input class="form-control form-control-lg @error('phone') is-invalid @enderror"  value="{{ old('phone') }}" autofocus
+													type="text" name="phone" placeholder="Enter phone number" aria-describedby="addon1" required
+													onchange="myChangeFunction(this)"/>
 													@error('phone')
 														<span class="invalid-feedback" role="alert">
 															<strong>{{ $message }}</strong>
@@ -67,7 +70,8 @@
 											<div class="col-md-6 col-6">			
 												<div class="mb-3">
 													<label class="form-label">Email</label>
-													<input class="form-control form-control-lg" type="email" name="email" placeholder="Enter your email" required />
+													<input class="form-control form-control-lg @error('email') is-invalid @enderror"  value="{{ old('email') }}" autofocus
+													type="email" name="email" placeholder="Enter your email" required />
 													@error('email')
 														<span class="invalid-feedback" role="alert">
 															<strong>{{ $message }}</strong>
@@ -77,10 +81,51 @@
 											</div>
 										</div>
 
+										<div class="row">
+                            				<div class="col-md-6 col-12">
+												<div class="mb-3">
+													<label for="title">Region:</label>
+													<select name="region" class="form-control" required  value="{{ old('region') }}" >
+														<option value="">--- Select Region ---</option>
+														@foreach ($region as $regions)
+															<option value="{{ $regions->regCode }}">{{ $regions->regDesc }}</option>
+														@endforeach
+													</select>
+												</div>
+											</div>
+									
+                            				<div class="col-md-6 col-12">
+												<div class="mb-3">
+													<label for="title">Province:</label>
+													<select name="province" class="form-control" required value="{{ old('province') }}">
+													</select>
+												</div>
+											</div>
+										</div>
+
+										<div class="row">
+                            				<div class="col-md-6 col-12">
+												<div class="mb-3">
+													<label for="title">Municipal:</label>
+													<select name="municipal" class="form-control" required value="{{ old('municipal') }}">
+													</select>
+												</div>
+											</div>
+										
+                            				<div class="col-md-6 col-12">
+												<div class="mb-3">
+													<label for="title">Barangay:</label>
+														<select name="brgy" class="form-control" required value="{{ old('brgy') }}">
+													</select>
+												</div>
+											</div>
+										</div>
+
 										<div class="mb-3">
-											<label class="form-label">Address</label>
-											<input class="form-control form-control-lg" type="text" name="address" placeholder="Enter your address" required/>
-                                            @error('address')
+											<label class="form-label">Street Address</label>
+											<input class="form-control form-control-lg" value="{{ old('street') }}"
+											type="text" name="street" placeholder="Enter your village and street" required/>
+                                            @error('street')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
@@ -91,7 +136,8 @@
                             				<div class="col-md-6 col-6">
 												<div class="mb-3">
 													<label class="form-label">Password</label>
-													<input class="form-control form-control-lg" type="password" name="password" placeholder="Enter password" required/>
+													<input class="form-control form-control-lg" 
+													type="password" name="password" placeholder="Enter password" required/>
 													@error('password')
 														<span class="invalid-feedback" role="alert">
 															<strong>{{ $message }}</strong>
@@ -123,7 +169,81 @@
 		</div>
 	</main>
 
-	<script src="js/app.js"></script>
+	<script src="/js/app.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+
+
+	<script type="text/javascript">
+	 	function myChangeFunction(phone) {
+			var phonecheck = document.getElementById('phonechecking');
+			phone.value = "+63"+phone.value;
+		}
+
+		$(document).ready(function() {
+			//REGION ON CHANGE
+			$('select[name="region"]').on('change', function() {
+				$('select[name="province"]').empty();
+				var regCode = $(this).val();
+				if(regCode) {
+					$.ajax({
+						url: '/regionChange/'+regCode,
+						type: "GET",
+						dataType: "json",
+						success:function(data) {
+							$('select[name="province"]').append('<option value="">--- Select Province ---</option>');
+							$.each(data, function(key, value) {
+								$('select[name="province"]').append('<option value="'+ value.provCode +'">'+ value.provDesc +'</option>');
+							});
+						}
+					});
+				}else{
+					$('select[name="province"]').empty();
+				}
+			});
+
+			//PROVINCE ON CHANGE
+			$('select[name="province"]').on('change', function() {
+				$('select[name="municipal"]').empty();
+				var provinceCode = $(this).val();
+				if(provinceCode) {
+					$.ajax({
+						url: '/provinceChange/'+provinceCode,
+						type: "GET",
+						dataType: "json",
+						success:function(data) {
+							$('select[name="municipal"]').append('<option value="">- Select Municipality -</option>');
+							$.each(data, function(key, value) {
+								$('select[name="municipal"]').append('<option value="'+ value.citymunCode +'">'+ value.citymunDesc +'</option>');
+							});
+						}
+					});
+				}else{
+					$('select[name="municipal"]').empty();
+				}
+			});
+
+			//MUNICIPALITY ON CHANGE
+			$('select[name="municipal"]').on('change', function() {
+				$('select[name="brgy"]').empty();
+				var municipalityCode = $(this).val();
+				if(municipalityCode) {
+					$.ajax({
+						url: '/municipalityChange/'+municipalityCode,
+						type: "GET",
+						dataType: "json",
+						success:function(data) {
+							$('select[name="brgy"]').append('<option value="">- Select Barangay -</option>');
+							$.each(data, function(key, value) {
+								$('select[name="brgy"]').append('<option value="'+ value.brgyCode +'">'+ value.brgyDesc +'</option>');
+							});
+						}
+					});
+				}else{
+					$('select[name="brgy"]').empty();
+				}
+			});
+		});
+	</script>
 
 </body>
 

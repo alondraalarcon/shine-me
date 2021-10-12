@@ -43,7 +43,8 @@
                                     @csrf
 										<div class="mb-3">
 											<label class="form-label">Email</label>
-											<input class="form-control form-control-lg" type="email" name="email" placeholder="Enter your email" />
+											<input class="form-control form-control-lg @error('email') is-invalid @enderror"  value="{{ old('email') }}" autofocus 
+											type="text" name="email" placeholder="Enter your email or Phone (+63)" />
                                             @error('email')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -52,7 +53,8 @@
 										</div>
 										<div class="mb-3">
 											<label class="form-label">Password</label>
-											<input class="form-control form-control-lg" type="password" name="password" placeholder="Enter your password" />
+											<input class="form-control form-control-lg"  value="{{ old('password') }}" autofocus  
+											type="password" name="password" placeholder="Enter your password" />
 											@error('password')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>

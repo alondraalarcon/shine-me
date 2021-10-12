@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Support\Facades\Auth;
+use Auth;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -28,11 +29,12 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectTo;
-    public function redirectTo(){
+    public function redirectTo()
+    {
         switch(Auth::user()->account_type){
             case '1':
-                $this->redirectTo = '/admin';
-                return $this->redirectTo;
+            $this->redirectTo = '/admin';
+            return $this->redirectTo;
                 break;
             case '2':
                 $this->redirectTo = '/carwashprovider';
@@ -46,7 +48,8 @@ class LoginController extends Controller
                 $this->redirectTo = '/login';
                 return $this->redirectTo;
         }
-    }
+    }  
+
     /**
      * Create a new controller instance.
      *
@@ -55,5 +58,15 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+    protected function credentials(Request $request)
+    {  
+        if(is_numeric($request->get('email'))){
+            return ['phone'=>$request->get('email'),'password'=>$request->get('password')];
+        }
+        elseif (filter_var($request->get('email'), FILTER_VALIDATE_EMAIL)) {
+            return ['email' => $request->get('email'), 'password'=>$request->get('password')];
+        }
+        return ['phone' => $request->get('email'), 'password'=>$request->get('password')];
     }
 }
