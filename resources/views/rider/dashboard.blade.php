@@ -22,14 +22,12 @@
                                     @csrf
                                         <div class="row">
                                             <div class="col-md-3 col-6">
-                                                <div class="dropdown">
-                                                    <select class="form-select" id="addressdrop" type="text" class="form-control @error('addressdrop') is-invalid @enderror"  
-                                                            required autofocus {{ ($userinfo->active == '0') ? '' : 'disabled' }}>
-                                                        <option value="0">--- Select Address ---</option>
-                                                        <option value="1" {{ ($userinfo->addresstype == '1') ? 'selected' : '' }}>Residential</option>
-                                                        <option value="2" {{ ($userinfo->addresstype == '2') ? 'selected' : '' }}>Current</option>
-                                                    </select>
-                                                </div>
+                                            <div class="d-grid gap-2">
+                                                <button type="button" class="btn btn-dark" id="getLocations" onclick="getLocation()">
+                                                <i class="fas fa-location-arrow"></i>  Get Location</button>
+                                            </div>
+                                            <input type="hidden" name="Latitude">
+					                        <input type="hidden" name="Longtitude">
                                             </div>
                                             <div class="col-md-9 col-6">
                                                 <div class="form-check form-switch float-end">
@@ -37,101 +35,6 @@
                                                     <label class="form-check-label" for="flexSwitchCheckDefault">{{ ($userinfo->active == '0') ? 'Offline' : 'Online' }}</label>
                                                 </div>
                                             </div>
-                                        </div>
-                                        </br>
-                                        <div id="addrressactive1">
-                                            <p> Your active address is 
-                                                {{($userinfo->regDesc == null) ? '' : $userinfo->regDesc}}, 
-                                                {{($userinfo->provDesc == null) ? '' : $userinfo->provDesc}},
-                                                {{($userinfo->citymunDesc == null) ? '' : $userinfo->citymunDesc}},
-                                                {{($userinfo->brgyDesc == null) ? '' : $userinfo->brgyDesc}},
-                                                {{($userinfo->street_add == null) ? '' : $userinfo->street_add}}
-                                            </p>
-                                        </div>
-                                        <div id="addrressactive2">
-                                            <p> Your active address is 
-                                                {{ ($userinfocurrent == null) ? '' : $userinfocurrent->regDesc }}, 
-                                                {{ ($userinfocurrent == null) ? '' : $userinfocurrent->provDesc }},
-                                                {{ ($userinfocurrent == null) ? '' : $userinfocurrent->citymunDesc }},
-                                                {{ ($userinfocurrent == null) ? '' : $userinfocurrent->brgyDesc }},
-                                                {{ ($userinfocurrent == null) ? '' : $userinfocurrent->street }}
-                                            </p>
-                                        </div>
-                                        <div id="address_inputarea" class="d-none">
-                                            <div class="row">
-                                                <div class="col-12 col-md-3">
-                                                    <label class="form-label" for="region">Region</label>
-                                                    <input type="text" class="form-control" id="region" value="{{ $userinfo->regDesc }}" readonly>
-                                                </div>
-                                                <div class="col-12 col-md-3">
-                                                    <label class="form-label" for="province">Province</label>
-                                                    <input type="text" class="form-control" id="province" value="{{ $userinfo->provDesc }}" readonly>
-                                                </div>
-                                                <div class="col-12 col-md-3">
-                                                    <label class="form-label" for="municipal">Municipal</label>
-                                                    <input type="text" class="form-control" id="municipal" value="{{ $userinfo->citymunDesc }}" readonly>
-                                                </div>
-                                                <div class="col-12 col-md-3">
-                                                    <label class="form-label" for="brgy">Barangay</label>
-                                                    <input type="text" class="form-control" id="brgy" value="{{ $userinfo->brgyDesc }}" readonly>
-                                                </div>
-                                                <div class="col-12 col-md-12">
-                                                    <label class="form-label" for="streetadd">Street Address</label>
-                                                    <input type="text" class="form-control" id="street" value="{{ $userinfo->street_add }}" readonly>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div id="current" class="d-none">
-                                        <div class="row">
-                            				<div class="col-md-6 col-12">
-												<div class="mb-3">
-													<label for="title">Region:</label>
-													<select name="region" id="current_region" class="form-control" >
-														<option value="">--- Select Region ---</option>
-														@foreach ($region as $regions)
-															<option value="{{ $regions->regCode }}">{{ $regions->regDesc }}</option>
-														@endforeach
-													</select>
-												</div>
-											</div>
-									
-                            				<div class="col-md-6 col-12">
-												<div class="mb-3">
-													<label for="title">Province:</label>
-													<select name="province" id="current_province" class="form-control">
-													</select>
-												</div>
-											</div>
-										</div>
-
-										<div class="row">
-                            				<div class="col-md-6 col-12">
-												<div class="mb-3">
-													<label for="title">Municipal:</label>
-													<select name="municipal" id="current_municipal" class="form-control" >
-													</select>
-												</div>
-											</div>
-										
-                            				<div class="col-md-6 col-12">
-												<div class="mb-3">
-													<label for="title">Barangay:</label>
-														<select name="brgy" id="current_brgy" class="form-control" >
-													</select>
-												</div>
-											</div>
-										</div>
-
-										<div class="mb-3">
-											<label class="form-label">Street Address</label>
-											<input class="form-control form-control-lg" type="text" id="current_street" name="street" placeholder="Enter your village and street" required/>
-                                            @error('street')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-										</div>
                                         </div>
                                     </form>
 
@@ -151,53 +54,107 @@
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script src="https://unpkg.com/sweetalert2@7.18.0/dist/sweetalert2.all.js"></script>
 
 
 
 <script type="text/javascript">
+var interval = null;
+
+interval = setInterval(function(){
+    $.ajax({
+        url: '/getBooking',
+        type: "GET",
+        data: {
+        },
+        success: function(data){
+            if(data == 0){
+
+            }else{
+                swal({
+                title: "Booking Alert!",
+                text: "Do you want to accept it?",
+                type: "success",
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Yes!",
+                reverseButtons: !0,
+                showCancelButton: !0
+
+                }).then(function (e) {
+                    var id = data.id;
+                    if (e.value === true) {
+
+                        $.ajax({
+                            type: "POST",
+                            url: '/confirmBooking/' +id,
+                            success: function (data) {
+                                window.location.href = '/booking_data/'+data;
+                            }         
+                        });
+                    }
+                });
+                clearInterval(interval); // stop the interval
+            }
+        }
+    });
+}, 1000);
+
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else { 
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+    }
+
+    function showPosition(position) {
+        $('input[name=Latitude]').val(position.coords.latitude);
+        $('input[name=Longtitude]').val(position.coords.longitude);
+
+        $('#getLocations').css({
+                'border-color': '#212529',
+                'background-color': 'transparent',
+                'color': '#212529',
+            });	
+
+        setTimeout(function(){
+            $('#getLocations').css({
+                'background-color': '#212529',
+                'color': 'white',
+            });	
+        }, 1000);	
+
+    }
 
 $(document).ready(function() {
 
-    var addressID = $("#addressdrop").val();
-        if(addressID == 1)
-        {
-            $('#addrressactive1').removeClass('d-none');
-            $('#addrressactive2').addClass('d-none');
-            
-        }else if(addressID == 2){
-            $('#addrressactive2').removeClass('d-none');
-            $('#addrressactive1').addClass('d-none');
-        }else{
-            $('#addrressactive1').addClass('d-none');
-            $('#addrressactive2').addClass('d-none');
-        }
-        
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
 
+
     $('#status').on('change.bootstrapSwitch', function(e) {
         var value = e.target.checked;
-        var addressval = $("#addressdrop").val();
-        var current_region = $("#current_region").val();
-        var current_province = $("#current_province").val();
-        var current_municipal = $("#current_municipal").val();
-        var current_brgy = $("#current_brgy").val();
-        var current_street = $("#current_street").val();
+        var lat= $('input[name=Latitude]').val();
+		var long= $('input[name=Longtitude]').val();
+
+        if(value == "true"){
+            if(lat == "" && long==""){
+                $('#error').removeClass('d-none');
+                $('#error').html("Please settle your location.");
+                setTimeout(function(){ $('#error').addClass('d-none'); }, 3000);	
+            }
+        }
 
         $.ajax({
             url: '/onchangeStatRider',
             type: "POST",
             data: {
                 value : value,
-                addressval : addressval,
-                current_region : current_region,
-                current_province : current_province,
-                current_municipal : current_municipal,
-                current_brgy : current_brgy,
-                current_street : current_street,
+                lat : lat,
+                long : long,
             },
             success: function(data){
                 if(data.code == 1)
@@ -217,81 +174,9 @@ $(document).ready(function() {
         });
     });
 
-      //ONCHANGE ADDRESS SELECT
-      $("#addressdrop").change(function () {
-        if($(this).val() == 1)
-        {
-            $('#address_inputarea').removeClass('d-none');
-            $('#current').addClass('d-none');
-            
-        }else{
-            $('#current').removeClass('d-none');
-            $('#address_inputarea').addClass('d-none');
-        }
-        
-    }); 
-    //REGION ON CHANGE
-			$('select[name="region"]').on('change', function() {
-				$('select[name="province"]').empty();
-				var regCode = $(this).val();
-				if(regCode) {
-					$.ajax({
-						url: '/regionChange/'+regCode,
-						type: "GET",
-						dataType: "json",
-						success:function(data) {
-							$('select[name="province"]').append('<option value="">--- Select Province ---</option>');
-							$.each(data, function(key, value) {
-								$('select[name="province"]').append('<option value="'+ value.provCode +'">'+ value.provDesc +'</option>');
-							});
-						}
-					});
-				}else{
-					$('select[name="province"]').empty();
-				}
-			});
 
-			//PROVINCE ON CHANGE
-			$('select[name="province"]').on('change', function() {
-				$('select[name="municipal"]').empty();
-				var provinceCode = $(this).val();
-				if(provinceCode) {
-					$.ajax({
-						url: '/provinceChange/'+provinceCode,
-						type: "GET",
-						dataType: "json",
-						success:function(data) {
-							$('select[name="municipal"]').append('<option value="">- Select Municipality -</option>');
-							$.each(data, function(key, value) {
-								$('select[name="municipal"]').append('<option value="'+ value.citymunCode +'">'+ value.citymunDesc +'</option>');
-							});
-						}
-					});
-				}else{
-					$('select[name="municipal"]').empty();
-				}
-			});
+    
 
-			//MUNICIPALITY ON CHANGE
-			$('select[name="municipal"]').on('change', function() {
-				$('select[name="brgy"]').empty();
-				var municipalityCode = $(this).val();
-				if(municipalityCode) {
-					$.ajax({
-						url: '/municipalityChange/'+municipalityCode,
-						type: "GET",
-						dataType: "json",
-						success:function(data) {
-							$('select[name="brgy"]').append('<option value="">- Select Barangay -</option>');
-							$.each(data, function(key, value) {
-								$('select[name="brgy"]').append('<option value="'+ value.brgyCode +'">'+ value.brgyDesc +'</option>');
-							});
-						}
-					});
-				}else{
-					$('select[name="brgy"]').empty();
-				}
-			});
 
 });
 </script>

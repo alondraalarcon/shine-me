@@ -14,6 +14,7 @@ class Usersupdatetable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
+            $table->string('wallet')->default('0');
             $table->string('region');
             $table->string('province');
             $table->string('municipal');
@@ -21,6 +22,7 @@ class Usersupdatetable extends Migration
             $table->renameColumn('address', 'street_add');
             $table->string('active')->default('0');
             $table->string('addresstype')->default('0');
+            $table->string('image')->nullable();
         });
     }
 

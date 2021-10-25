@@ -31,7 +31,7 @@ class RegistrationController extends Controller
 
     public function formunicipal($provinceCode)
     {
-        $municipal = DB::table("refcitymun")
+        $municipal = DB::table("refcitymuns")
                     ->where("provCode",$provinceCode)->orderBy("citymunDesc")
                     ->get();
 
@@ -40,7 +40,7 @@ class RegistrationController extends Controller
 
     public function forbrgy($municipalityCode)
     {
-        $brgy = DB::table("refbrgy")
+        $brgy = DB::table("refbrgies")
                     ->where("citymunCode",$municipalityCode)->orderBy("brgyDesc")
                     ->get();
 

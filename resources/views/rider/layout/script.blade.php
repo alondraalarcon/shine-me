@@ -3,10 +3,8 @@
 
 <script>
     $(document).ready(function() {
-        $('#example').DataTable();
-    } );
-
-    $(document).ready(function() {
-        $('#approved').DataTable();
+        $('#withdraw').DataTable({
+            responsive : true
+        });
     } );
 </script>

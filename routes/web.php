@@ -5,6 +5,7 @@ use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CarwashProviderController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\TopUpController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +19,7 @@ use App\Http\Controllers\CustomerController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -43,13 +44,14 @@ Auth::routes();
 
 Route::group(['middleware' => 'App\Http\Middleware\Admin'], function () {
     Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->name('admin');
-    Route::get('/customers', function () { return view('admin.customers.customers'); });
 
     //CARWASH PROVIDER
-    Route::get('/riders', [App\Http\Controllers\CarwashProviderController::class, 'carwashproviderlist']);
-    Route::get('/carwash/show/{id}', [App\Http\Controllers\CarwashProviderController::class, 'show']);
-    Route::post('/carwash/approved/{id}', [App\Http\Controllers\CarwashProviderController::class, 'approved']);
-    Route::post('/carwash/update/{id}', [App\Http\Controllers\CarwashProviderController::class, 'update']);
+    Route::get('/riders', [App\Http\Controllers\AdminController::class, 'carwashproviderlist']);
+    Route::get('/carwash/show/{id}', [App\Http\Controllers\AdminController::class, 'show']);
+    Route::post('/carwash/approved/{id}', [App\Http\Controllers\AdminController::class, 'approved']);
+    Route::post('/carwash/uploadimage/{id}', [App\Http\Controllers\AdminController::class, 'uploadimage']);
+    Route::post('/carwash/update/{id}', [App\Http\Controllers\AdminController::class, 'update']);
+    Route::get('/customers', [App\Http\Controllers\AdminController::class, 'customerslist']);
 
 
     //VEHICLES 
@@ -58,6 +60,14 @@ Route::group(['middleware' => 'App\Http\Middleware\Admin'], function () {
     Route::get('/vehicles/show/{id}', [App\Http\Controllers\VehicleController::class, 'show']);
     Route::post('/vehicles/update/{id}', [App\Http\Controllers\VehicleController::class, 'update']);
     Route::post('/vehicles/destroy/{id}', [App\Http\Controllers\VehicleController::class, 'destroy']);
+
+    //TOP-UP
+    Route::get('/topuprequest', [App\Http\Controllers\TopUpController::class, 'topuprequest']);
+    Route::get('/topUp/show/{id}', [App\Http\Controllers\TopUpController::class, 'topUp_show']);
+    Route::POST('/topUp/approve/{id}', [App\Http\Controllers\TopUpController::class, 'topUp_approve']);
+    Route::get('/topUp/rejectshow/{id}', [App\Http\Controllers\TopUpController::class, 'topUp_rejectshow']);
+    Route::POST('/topUp/reject/{id}', [App\Http\Controllers\TopUpController::class, 'topUp_reject']);
+
 });
 /*
 |
@@ -71,11 +81,22 @@ Route::group(['middleware' => 'App\Http\Middleware\Admin'], function () {
 Route::group(['middleware' => 'App\Http\Middleware\CarwashProvider'], function () {
     // DISPLAYS
     Route::get('/carwashprovider', [App\Http\Controllers\CarwashProviderController::class, 'index'])->name('carwashprovider');
-    Route::get('/wallet', function () { return view('rider.wallet.wallet'); });
+    Route::get('/wallet', [App\Http\Controllers\CarwashProviderController::class, 'wallet']);
     Route::get('/bookings', function () { return view('rider.bookinghistory.bookinghistory'); });
     
     // ONCHANGE STATUS
     Route::post('/onchangeStatRider', [App\Http\Controllers\CarwashProviderController::class, 'onchangeStatRider'])->name('onchangeStatRider');
+
+    Route::get('/carwashprovider', [App\Http\Controllers\CarwashProviderController::class, 'index'])->name('carwashprovider');
+    
+    // BOOKING
+    Route::get('/getBooking', [App\Http\Controllers\CarwashProviderController::class, 'getBooking'])->name('getBooking');
+    Route::post('/confirmBooking/{id}', [App\Http\Controllers\CarwashProviderController::class, 'confirmBooking']);
+    Route::get('/booking_data/{id}', [App\Http\Controllers\CarwashProviderController::class, 'booking_data']);
+    Route::POST('/doneBooking', [App\Http\Controllers\CarwashProviderController::class, 'doneBooking'])->name('doneBooking');
+
+    //Request Top-up
+    Route::post('/topupRequest', [App\Http\Controllers\CarwashProviderController::class, 'topupRequest'])->name('topupRequest');
 
 
 });
@@ -90,6 +111,11 @@ Route::group(['middleware' => 'App\Http\Middleware\CarwashProvider'], function (
 */
 Route::group(['middleware' => 'App\Http\Middleware\Customer'], function () {
     Route::get('/customer', [App\Http\Controllers\CustomerController::class, 'index'])->name('customer');
+    Route::POST('/ridersearch', [App\Http\Controllers\CustomerController::class, 'ridersearch']);
+    Route::POST('/riderinfofetch', [App\Http\Controllers\CustomerController::class, 'riderinfofetch'])->name('riderinfofetch');
+    Route::POST('/riderdistancefetch', [App\Http\Controllers\CustomerController::class, 'riderdistancefetch'])->name('riderdistancefetch');
+    Route::POST('/saveBooking', [App\Http\Controllers\CustomerController::class, 'saveBooking'])->name('saveBooking');
+    Route::get('/getBookingCustomer', [App\Http\Controllers\CustomerController::class, 'getBookingCustomer']);
 
 });
 

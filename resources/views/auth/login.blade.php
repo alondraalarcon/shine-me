@@ -62,6 +62,11 @@
                                             @enderror
                        
 										</div>
+										<div class="mb-3">
+											<div class="float-end">
+												<a style="color:#c31c22; font-weight: 500;" href="{{ route('register') }}">Don't have an account?</a>
+											</div>
+										</div><br/>
 										
 										<div class="text-center mt-3">
 											<button type="submit" class="btn btn-lg btn-primary">Sign in</button>

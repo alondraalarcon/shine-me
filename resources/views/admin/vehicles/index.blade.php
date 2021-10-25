@@ -56,16 +56,7 @@
             <div class="modal-body">
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Vehicle Type</label>
-                    <select class="form-select" name="type">
-                        <option value="Motorcycle">Motorcycle</option>
-                        <option value="Hatchback">Hatchback</option>
-                        <option value="Sedan">Sedan</option>
-                        <option value="Multipurpose vehicle (MPV)">Multipurpose vehicle (MPV)</option>
-                        <option value="Sport utility vehicle (SUV)">Sport utility vehicle (SUV)</option>
-                        <option value="Pickup Truck">Pickup truck</option>
-                        <option value="Station Wagon">Station Wagon</option>
-                        <option value="Van">Van</option>
-                    </select>
+                    <input type="text" class="form-control" name="type">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Price</label>

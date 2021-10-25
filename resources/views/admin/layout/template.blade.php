@@ -13,6 +13,7 @@
     <link rel="shortcut icon" href="img/icons/icon-48x48.png" />
 
     <link rel="canonical" href="https://demo-basic.adminkit.io/" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Shine Me</title>
 
@@ -64,10 +65,10 @@
                         </a>
 					</li>
 
-					<li class="sidebar-item {{ Request::is('services') ? 'active':''}}">
-						<a class="sidebar-link" href="/services">
-							<i class="fas fa-briefcase"></i>
-                            <span class="align-middle">Services</span>
+                    <li class="sidebar-item {{ Request::is('topuprequest') ? 'active':''}}">
+						<a class="sidebar-link" href="/topuprequest">
+                            <i class="fas fa-ruble-sign"></i>                            
+                            <span class="align-middle">Top-Up Request</span>
                         </a>
 					</li>
 
@@ -81,7 +82,7 @@
 					<li class="sidebar-item {{ Request::is('sales') ? 'active':''}}">
 						<a class="sidebar-link" href="/sales">
 							<i class="fas fa-money-bill-wave-alt"></i>
-                            <span class="align-middle">Monitor Sales</span>
+                            <span class="align-middle">Monitor Commission</span>
                         </a>
 					</li>
 
@@ -92,7 +93,7 @@
 
                     <ul id="settings" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar" style="">
                         <li class="sidebar-item"><a class="sidebar-link" href="/"> Set Commissions </a></li>
-                        <li class="sidebar-item"><a class="sidebar-link" href="/"> </a></li>
+                        <li class="sidebar-item"><a class="sidebar-link" href="/"> Set Tax </a></li>
                     </ul>
 				</ul>
 			</div>
@@ -111,16 +112,10 @@
                 <i class="align-middle" data-feather="settings"></i>
               </a>
 
-							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                <img src="/asset/img/avatars/avatar.jpg" class="avatar img-fluid rounded me-1" alt="Charles Hall" /> <span class="text-dark">Charles Hall</span>
-              </a>
+				<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+                    <span class="text-dark">{{auth()->user()->name}}</span>
+                </a>
 							<div class="dropdown-menu dropdown-menu-end">
-								<a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
-								<a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="pie-chart"></i> Analytics</a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="index.html"><i class="align-middle me-1" data-feather="settings"></i> Settings & Privacy</a>
-								<a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="help-circle"></i> Help Center</a>
-								<div class="dropdown-divider"></div>
 								<a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">Log out</a>

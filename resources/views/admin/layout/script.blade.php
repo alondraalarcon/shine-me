@@ -3,10 +3,28 @@
 
 <script>
     $(document).ready(function() {
-        $('#example').DataTable();
+        $('#pending').DataTable({
+            responsive : true
+        });
     } );
 
     $(document).ready(function() {
-        $('#approved').DataTable();
+        $('#approved').DataTable({
+            responsive : true
+        });
     } );
+
+    $(document).ready(function() {
+        $('#wallet').DataTable({
+            responsive : true
+        });
+    } );
+
+    $(document).ready(function() {
+        $('#walletrequest').DataTable({
+            responsive : true
+        });
+    } );
+
+    
 </script>

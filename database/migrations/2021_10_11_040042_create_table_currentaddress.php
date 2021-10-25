@@ -16,11 +16,9 @@ class CreateTableCurrentaddress extends Migration
         Schema::create('currentadds', function (Blueprint $table) {
             $table->id();
             $table->string('user_id');
-            $table->string('region');
-            $table->string('province');
-            $table->string('municipal');
-            $table->string('brgy');
-            $table->string('street');
+            $table->string('lat');
+            $table->string('long');
+            $table->string('landmark')->nullable();
             $table->string('active')->default('0');
             $table->timestamps();
         });
